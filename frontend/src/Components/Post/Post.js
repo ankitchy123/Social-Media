@@ -7,11 +7,11 @@ import { MoreVert, ChatBubbleOutline, DeleteOutline } from "@mui/icons-material"
 import { useDispatch, useSelector } from 'react-redux'
 import "./Post.css"
 import { addcommentOnPost, deletePost, likePost, updatePost } from '../../Actions/Post';
-import { getFollowingPosts, getMyPosts, loadUser } from '../../Actions/User';
+import { getFollowingPosts, getMyPosts, getUserPosts, loadUser } from '../../Actions/User';
 import User from '../User/User';
 import CommentCard from '../CommentCard/CommentCard';
 
-const Post = ({ postId, caption, postImage, likes = [], comments = [], ownerImage, ownerName, ownerId, isDelete = false, isAccount = false }) => {
+const Post = ({ postId, caption, postImage, likes = [], comments = [], ownerImage, ownerName, ownerId, isDelete = false, account }) => {
     const [liked, setLiked] = useState(false)
     const [likesUser, setLikesUser] = useState(false)
 
@@ -26,12 +26,15 @@ const Post = ({ postId, caption, postImage, likes = [], comments = [], ownerImag
     const handleLike = async () => {
         setLiked(!liked);
         await dispatch(likePost(postId))
-        console.log(isAccount);
-        if (!isAccount) {
+        console.log(account);
+        if (account === "home") {
             dispatch(getFollowingPosts())
         }
-        else {
+        else if (account === "myaccount") {
             dispatch(getMyPosts())
+        }
+        else {
+            dispatch(getUserPosts(ownerId))
         }
     }
 
@@ -39,11 +42,14 @@ const Post = ({ postId, caption, postImage, likes = [], comments = [], ownerImag
         e.preventDefault();
         await dispatch(addcommentOnPost(postId, commentValue))
 
-        if (!isAccount) {
+        if (account === "home") {
             dispatch(getFollowingPosts())
         }
-        else {
+        else if (account === "myaccount") {
             dispatch(getMyPosts())
+        }
+        else {
+            dispatch(getUserPosts(ownerId))
         }
     }
 
@@ -71,7 +77,7 @@ const Post = ({ postId, caption, postImage, likes = [], comments = [], ownerImag
     return (
         <div className='post'>
             <div className="postHeader">
-                {isAccount ? <Button onClick={() => setCaptionToggle(!captionToggle)}>
+                {account === "myaccount" ? <Button onClick={() => setCaptionToggle(!captionToggle)}>
                     <MoreVert />
                 </Button> : null}
             </div>
@@ -124,13 +130,14 @@ const Post = ({ postId, caption, postImage, likes = [], comments = [], ownerImag
                     {comments.length > 0 ? comments.map((item) => (
                         <CommentCard
                             key={item._id}
+                            ownerId={ownerId}
                             userId={item.user._id}
                             name={item.user.name}
                             avatar={item.user.avatar.url}
                             comment={item.comment}
                             commentId={item._id}
                             postId={postId}
-                            isAccount={isAccount}
+                            account={account}
                         />
                     )) : <Typography>No Comments Yet</Typography>}
                 </div>

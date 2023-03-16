@@ -1,18 +1,33 @@
 import "./UpdatePassword.css"
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Typography, Button } from "@mui/material";
-import { useDispatch, } from "react-redux";
-import { loginUser } from "../../Actions/User";
+import { useDispatch, useSelector, } from "react-redux";
+import { updatePassword } from "../../Actions/User";
+import { useAlert } from "react-alert"
 
 const UpdatePassword = () => {
     const [oldPassword, setOldPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");
     const dispatch = useDispatch();
+    const alert = useAlert()
+
+    const { loading, message, error } = useSelector((state) => state.like)
 
     const submitHandler = (e) => {
         e.preventDefault();
-        dispatch(loginUser(oldPassword, newPassword));
+        dispatch(updatePassword(oldPassword, newPassword));
     };
+
+    useEffect(() => {
+        if (error) {
+            alert.error(error)
+            dispatch({ type: "clearErrors" })
+        }
+        if (message) {
+            alert.success(message)
+            dispatch({ type: "clearMessage" })
+        }
+    }, [dispatch, alert, error, message])
 
     return (
         <div className="updatePassword">
@@ -38,7 +53,7 @@ const UpdatePassword = () => {
                     onChange={(e) => setNewPassword(e.target.value)}
                 />
 
-                <Button type="submit">CHANGE PASSWORD</Button>
+                <Button disabled={loading} type="submit">CHANGE PASSWORD</Button>
             </form>
         </div>
     );

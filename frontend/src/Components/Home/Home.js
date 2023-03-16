@@ -44,7 +44,7 @@ const Home = () => {
                             key={post._id}
                             postImage={"https://www.denofgeek.com/wp-content/uploads/2022/02/iron-man-doctor-strange-avengers-infinity-war.jpg?fit=1280%2C720"}
                             caption={post.caption}
-                            isAccount={false}
+                            account={"home"}
                             postId={post._id}
                             likes={post.likes}
                             comments={post.comments}

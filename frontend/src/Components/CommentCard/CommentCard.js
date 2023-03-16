@@ -5,19 +5,22 @@ import { Button, Typography } from '@mui/material'
 import { Delete } from '@mui/icons-material'
 import { useDispatch, useSelector } from 'react-redux'
 import { deleteCommentOnPost } from '../../Actions/Post'
-import { getFollowingPosts } from '../../Actions/User'
+import { getFollowingPosts, getMyPosts, getUserPosts } from '../../Actions/User'
 
-const CommentCard = ({ userId, name, avatar, comment, commentId, postId, isAccount }) => {
+const CommentCard = ({ ownerId, userId, name, avatar, comment, commentId, postId, account }) => {
     const { user } = useSelector((state) => state.user)
     const dispatch = useDispatch();
     const deleteCommentHandler = async () => {
         await dispatch(deleteCommentOnPost(postId, commentId))
 
-        if (!isAccount) {
+        if (account === "home") {
             dispatch(getFollowingPosts())
         }
+        else if (account === "myaccount") {
+            dispatch(getMyPosts())
+        }
         else {
-            console.log("My posts");
+            dispatch(getUserPosts(ownerId))
         }
     }
 
@@ -28,7 +31,7 @@ const CommentCard = ({ userId, name, avatar, comment, commentId, postId, isAccou
                 <Typography style={{ minWidth: "6vmax" }}>{name}</Typography>
             </Link>
             <Typography style={{ marginLeft: "1vmax" }}>{comment}</Typography>
-            {isAccount ? <Button onClick={deleteCommentHandler}>
+            {account === "myaccount" ? <Button onClick={deleteCommentHandler}>
                 <Delete />
             </Button> : userId === user._id ? <Button onClick={deleteCommentHandler}>
                 <Delete />

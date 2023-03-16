@@ -55,6 +55,7 @@ exports.logout = async (req, res) => {
 
 exports.followUser = async (req, res) => {
     try {
+        console.log(req.user);
         const userToFollow = await User.findById(req.params.id);
         const loggedInUser = await User.findById(req.user._id);
 
@@ -139,9 +140,13 @@ exports.deleteMyProfile = async (req, res) => {
     try {
         const user = await User.findById(req.user._id);
 
+        // Removing avatar from cloudinary
+        await cloudinary.v2.uploader.destroy(user.avatar.public_id)
+
         // Deleting all posts of the user
         for (let i = 0; i < user.posts.length; i++) {
             const post = await Post.findById(user.posts[i]);
+            await cloudinary.v2.uploader.destroy(post.image.public_id)
             await post.remove();
         }
 
@@ -198,18 +203,24 @@ exports.myProfile = async (req, res) => {
 exports.getUserProfile = async (req, res) => {
     try {
         const user = await User.findById(req.params.id).populate("posts followers following");
+
         if (!user) {
-            res.status(404).json({ success: false, message: "User not found" });
+            return res.status(404).json({ success: false, message: "User not found" });
         }
+
         res.status(200).json({ success: true, user });
     } catch (error) {
-        res.status(500).json({ success: false, message: error.message })
+        res.status(500).json({ success: false, message: error.message });
     }
 };
 
 exports.getAllUser = async (req, res) => {
     try {
-        const users = await User.find({});
+        const users = await User.find({ name: { $regex: req.query.name, $options: 'i' } });
+        const index = users.findIndex(e => e._id.toString() === req.user._id.toString());
+        if (index > -1) {
+            users.splice(index, 1);
+        }
         res.status(200).json({ success: true, users });
     } catch (error) {
         res.status(500).json({ success: false, message: error.message })
@@ -224,7 +235,7 @@ exports.forgotPassword = async (req, res) => {
         const resetPasswordToken = user.getResetPasswordToken();
         await user.save();
 
-        const resetUrl = `${req.protocol}://${req.get("host")}/api/v1/password/reset/${resetPasswordToken}`;
+        const resetUrl = `${req.protocol}://${req.get("host")}/password/reset/${resetPasswordToken}`;
 
         const message = `Reset your password by clicking on the link below: \n\n ${resetUrl}`;
 
@@ -269,6 +280,20 @@ exports.resetPassword = async (req, res) => {
 exports.getMyPosts = async (req, res) => {
     try {
         const user = await User.findById(req.user._id)
+        const posts = []
+        for (let i = 0; i < user.posts.length; i++) {
+            const post = await Post.findById(user.posts[i]).populate("likes comments.user owner")
+            posts.push(post)
+        }
+        return res.status(200).json({ success: true, posts });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+}
+
+exports.getUserPosts = async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id)
         const posts = []
         for (let i = 0; i < user.posts.length; i++) {
             const post = await Post.findById(user.posts[i]).populate("likes comments.user owner")

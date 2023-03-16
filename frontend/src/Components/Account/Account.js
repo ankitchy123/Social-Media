@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useAlert } from "react-alert"
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { getMyPosts, logoutUser } from '../../Actions/User'
+import { deleteMyProfile, getMyPosts, logoutUser } from '../../Actions/User'
 import Loader from '../Loader/Loader'
 import Post from '../Post/Post'
 import User from '../User/User'
@@ -14,7 +14,7 @@ const Account = () => {
     const alert = useAlert();
     const { user, loading: userLoading } = useSelector((state) => state.user)
     const { loading, error, posts } = useSelector((state) => state.myPosts)
-    const { error: likeError, message } = useSelector((state) => state.like)
+    const { error: likeError, message, loading: deleteLoading } = useSelector((state) => state.like)
 
     const [followersToggle, setFollowersToggle] = useState(false)
     const [followingToggle, setFollowingToggle] = useState(false)
@@ -23,6 +23,11 @@ const Account = () => {
     const logoutHandler = async () => {
         await dispatch(logoutUser())
         alert.success("Logged out successfully")
+    }
+
+    const deleteProfileHandler = async () => {
+        await dispatch(deleteMyProfile())
+        dispatch(logoutUser())
     }
 
     useEffect(() => {
@@ -55,7 +60,7 @@ const Account = () => {
                             key={post._id}
                             postImage={post.image.url}
                             caption={post.caption}
-                            isAccount={true}
+                            account="myaccount"
                             postId={post._id}
                             likes={post.likes}
                             comments={post.comments}
@@ -94,7 +99,7 @@ const Account = () => {
                     <Link to="/update/profile">Edit Profile</Link>
                     <Link to="/update/password">Change Password</Link>
 
-                    <Button variant='text' style={{ color: "red", margin: "2vmax" }}>
+                    <Button variant='text' style={{ color: "red", margin: "2vmax" }} onClick={deleteProfileHandler} disable={deleteLoading}>
                         Delete My Profile
                     </Button>
 
@@ -121,13 +126,13 @@ const Account = () => {
                                     key={item._id}
                                     userId={item._id}
                                     name={item.name}
-                                    avatar={item.avatar}
+                                    avatar={item.avatar.url}
                                 />
                             ))) : <Typography style={{ margin: "2vmax" }}>You're not following anyone</Typography>}
                         </div>
                     </Dialog>
                 </div>
-            </div>
+            </div >
     )
 }
 
