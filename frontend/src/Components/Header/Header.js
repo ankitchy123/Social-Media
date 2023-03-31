@@ -11,6 +11,8 @@ import {
     AccountCircle,
     AccountCircleOutlined,
 } from "@mui/icons-material";
+import MapsUgcIcon from '@mui/icons-material/MapsUgc';
+import MapsUgcOutlinedIcon from '@mui/icons-material/MapsUgcOutlined';
 
 const Header = () => {
     const [tab, setTab] = useState(window.location.pathname);
@@ -33,6 +35,13 @@ const Header = () => {
                     <Search style={{ color: "black" }} />
                 ) : (
                     <SearchOutlined />
+                )}
+            </Link>
+            <Link to="/message" onClick={() => setTab("/message")}>
+                {tab === "/message" ? (
+                    <MapsUgcIcon style={{ color: "black" }} />
+                ) : (
+                    <MapsUgcOutlinedIcon />
                 )}
             </Link>
 

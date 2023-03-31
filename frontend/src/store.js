@@ -1,4 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
+import { allChatsReducer } from "./Reducers/Chat";
+import { fetchMessageReducer } from "./Reducers/Message";
 import { likeReducer, myPostsReducer, userPostsReducer } from "./Reducers/Post";
 import { allUsersReducer, postOfFollowingReducer, userProfileReducer, userReducer } from "./Reducers/User";
 
@@ -11,6 +13,8 @@ const store = configureStore({
         myPosts: myPostsReducer,
         userProfile: userProfileReducer,
         userPosts: userPostsReducer,
+        allChats: allChatsReducer,
+        // messages: fetchMessageReducer
     }
 });
 

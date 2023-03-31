@@ -18,7 +18,7 @@ const Search = () => {
         <div className="search">
             <form className="searchForm" onSubmit={submitHandler}>
                 <Typography variant="h3" style={{ padding: "2vmax" }}>
-                    Social Aap
+                    Social Media
                 </Typography>
 
                 <input

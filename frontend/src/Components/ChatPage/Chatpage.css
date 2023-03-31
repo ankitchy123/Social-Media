@@ -1,0 +1,96 @@
+.chat {
+    background-image: linear-gradient(to right, #fff5bc, #cec1ff);
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 91vh;
+    width: 100vw;
+}
+
+.chatleft{
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 2vmax;
+    width: 28vw;
+    height: 85vh;
+    background-color: white;
+    border-radius: 10px;
+}
+.chatright{
+    height: 85vh;
+    box-sizing: border-box;
+    overflow-y: auto;
+    width: 70vw;
+    background-color: white;
+    border-radius: 10px;
+}
+
+.nochat{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.newChatDialog{
+    background-color: white;
+    height: 80vh;
+    width: 100%;
+    border-radius: 50px;
+    box-sizing: border-box;
+    /* padding: 2vmax; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.newChatsearchForm {
+    background-color: white;
+    /* height: 100%; */
+    width: 100%;
+    border-radius: 30px;
+    box-sizing: border-box;
+    padding: 2vmax;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.newChatsearchForm > input {
+    box-sizing: border-box;
+    padding: 1vmax 2vmax;
+    width: 100%;
+    border-radius: 40px;
+    border: 1px solid #ccc;
+    margin: 2vmax;
+    font: 100 1.2rem "Roboto", sans-serif;
+    outline: none;
+}
+
+.searchResults {
+    width: 100%;
+    /* height: 100%; */
+    /* overflow-y: auto; */
+    padding: 2vmax;
+    box-sizing: border-box;
+    margin: 2vmax;
+}
+
+@media screen and (max-width: 600px) {
+    .newChatsearchForm {
+      width: 100%;
+    }
+  
+    .newChatsearchForm > input {
+      padding: 4vw 8vw;
+      margin: 2vmax;
+      font: 100 1.2rem "Roboto", sans-serif;
+      margin: 4vw;
+    }
+}

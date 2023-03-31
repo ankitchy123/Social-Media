@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useAlert } from "react-alert"
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { deleteMyProfile, getMyPosts, logoutUser } from '../../Actions/User'
+import { deleteMyProfile, getMyPosts, loadUser, logoutUser } from '../../Actions/User'
 import Loader from '../Loader/Loader'
 import Post from '../Post/Post'
 import User from '../User/User'
@@ -32,6 +32,7 @@ const Account = () => {
 
     useEffect(() => {
         dispatch(getMyPosts())
+        dispatch(loadUser())
     }, [dispatch])
 
 
@@ -48,7 +49,7 @@ const Account = () => {
             alert.success(message)
             dispatch({ type: "clearMessage" })
         }
-    }, [alert, error, message, likeError, dispatch])
+    }, [alert, error, message, likeError, dispatch, user])
 
     return (
         loading === true || userLoading === true ?
@@ -112,7 +113,7 @@ const Account = () => {
                                     key={item._id}
                                     userId={item._id}
                                     name={item.name}
-                                    avatar={item.avatar}
+                                    avatar={item.avatar.url}
                                 />
                             ))) : <Typography style={{ margin: "2vmax" }}>You have no followers</Typography>}
                         </div>
