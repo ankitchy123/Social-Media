@@ -10,7 +10,8 @@ const userSchema = new mongoose.Schema({
     },
     avatar: {
         public_id: String,
-        url: String
+        url: String,
+        required: [true, 'Please upload image']
     },
     email: {
         type: String,

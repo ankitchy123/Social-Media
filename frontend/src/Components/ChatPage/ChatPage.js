@@ -21,6 +21,7 @@ const ChatPage = () => {
     const dispatch = useDispatch();
     const newChat = async (id) => {
         await dispatch(accessChat(id))
+        setSearchToggle(!searchToggle)
         // setSelectedChat(singleChat._id)
     }
     const submitHandler = (e) => {
