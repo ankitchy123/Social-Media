@@ -13,7 +13,7 @@ import { IconButton } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import ScrollableChat from '../ScrollableChat/ScrollableChat';
 import { useAlert } from "react-alert"
-const ENDPOINT = "http://localhost:4000";
+const ENDPOINT = "https://social-media-app-mgt4.onrender.com";
 var socket, selectedChatCompare;
 
 const SingleChat = ({ selectedChat, fetchAgain, setFetchAgain }) => {
