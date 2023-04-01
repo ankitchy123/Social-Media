@@ -1,18 +1,12 @@
 const app = require("./app");
 const { connectDatabase } = require("./config/database");
 const cloudinary = require("cloudinary")
-const path = require("path")
 connectDatabase();
 
 cloudinary.config({
     cloud_name: process.env.CLOUDINARY_NAME,
     api_key: process.env.CLOUDINARY_KEY,
     api_secret: process.env.CLOUDINARY_SECRET
-})
-
-app.use(express.static(path.join(__dirname, "../frontend/build")))
-app.get("*", function (req, res) {
-    res.sendFile(path.join(__dirname, "../frontend/build/index.html"))
 })
 
 const server = app.listen(process.env.PORT, () => {
