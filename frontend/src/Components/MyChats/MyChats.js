@@ -10,7 +10,7 @@ import Loader from '../Loader/Loader';
 import { getAllUsers } from '../../Actions/User';
 import UserListItem from '../UserListItem/UserListItem';
 import UserBadgeItem from '../UserBadgeItem/UserBadgeItem';
-import { useAlert } from 'react-alert';
+import { useAlert } from "react-alert"
 
 const MyChats = ({ setSearchToggle, searchToggle, selectedChat, setSelectedChat, setFetchAgain, fetchAgain }) => {
     const [createGroupToggle, setCreateGroupToggle] = useState(false)
@@ -26,6 +26,10 @@ const MyChats = ({ setSearchToggle, searchToggle, selectedChat, setSelectedChat,
     const dispatch = useDispatch();
 
     const handleSubmit = () => {
+        if (!groupChatName || !selectedUsers) {
+            alert.info("Please fill all the feilds")
+            return;
+        }
         let userSet = JSON.stringify(selectedUsers.map((u) => u._id))
         dispatch(createGroup(groupChatName, userSet))
         setCreateGroupToggle(!createGroupToggle)
@@ -33,6 +37,7 @@ const MyChats = ({ setSearchToggle, searchToggle, selectedChat, setSelectedChat,
     }
     const handleSearch = (query) => {
         if (!query) {
+            alert.info("Please enter a name")
             return;
         }
         dispatch(getAllUsers(query))
@@ -40,7 +45,7 @@ const MyChats = ({ setSearchToggle, searchToggle, selectedChat, setSelectedChat,
 
     const handleGroup = (userToAdd) => {
         if (selectedUsers.includes(userToAdd)) {
-            alert.success("User already added")
+            alert.info("User already added")
             return;
         }
         setSelectedUsers([...selectedUsers, userToAdd]);
@@ -76,7 +81,7 @@ const MyChats = ({ setSearchToggle, searchToggle, selectedChat, setSelectedChat,
                             >
                                 <Typography>
                                     {!chat.isGroupChat
-                                        ? chat.users[1].name
+                                        ? getSender(user, chat.users)
                                         : chat.chatName}
                                 </Typography>
                                 {chat.latestMessage && (

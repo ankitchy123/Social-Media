@@ -51,45 +51,45 @@ const ChatPage = () => {
                     <Typography style={{ margin: "1vmax" }}>Your Messages</Typography>
                     <Button onClick={() => setSearchToggle(!searchToggle)}>Send Message</Button>
 
-                    <Dialog open={searchToggle} onClose={() => setSearchToggle(!searchToggle)}>
-                        <div className="newChatDialog">
-                            <form className="newChatsearchForm" onSubmit={submitHandler}>
-                                {/* <form className="newChatsearchForm"> */}
-                                <Typography variant="h3" style={{ padding: "2vmax" }}>
-                                    Search User
-                                </Typography>
-                                {/* <Input>
-</Input> */}
-                                <input
-                                    type="text"
-                                    placeholder="Name..."
-                                    value={name}
-                                    required
-                                    onChange={(e) => setName(e.target.value)}
-                                />
-
-                                <Button disabled={loading} type="submit">
-                                    Search
-                                </Button>
-
-                                <div className="searchResults">
-                                    {users && users.length > 0 ?
-                                        users.map((user) => (
-                                            // <div to={`/user/${user.userId}`} className='homeUser' key={user.userId}>
-                                            // <div onClick={newChat(user._id)} className='homeUser' key={user._id}>
-                                            <UserListItem
-                                                key={user._id}
-                                                user={user}
-                                                handleFunction={() => newChat(user._id)}
-                                            // setSelectedChat={setSelectedChat}
-                                            />
-                                        )) :
-                                        <Typography sx={{ width: "90%", margin: "auto" }} variant='h4'>No user with this name</Typography>}
-                                </div>
-                            </form>
-                        </div>
-                    </Dialog>
                 </div>}
+                <Dialog open={searchToggle} onClose={() => setSearchToggle(!searchToggle)}>
+                    <div className="newChatDialog">
+                        <form className="newChatsearchForm" onSubmit={submitHandler}>
+                            {/* <form className="newChatsearchForm"> */}
+                            <Typography variant="h3" style={{ padding: "2vmax" }}>
+                                Search User
+                            </Typography>
+                            {/* <Input>
+</Input> */}
+                            <input
+                                type="text"
+                                placeholder="Name..."
+                                value={name}
+                                required
+                                onChange={(e) => setName(e.target.value)}
+                            />
+
+                            <Button disabled={loading} type="submit">
+                                Search
+                            </Button>
+
+                            <div className="searchResults">
+                                {users && users.length > 0 ?
+                                    users.map((user) => (
+                                        // <div to={`/user/${user.userId}`} className='homeUser' key={user.userId}>
+                                        // <div onClick={newChat(user._id)} className='homeUser' key={user._id}>
+                                        <UserListItem
+                                            key={user._id}
+                                            user={user}
+                                            handleFunction={() => newChat(user._id)}
+                                        // setSelectedChat={setSelectedChat}
+                                        />
+                                    )) :
+                                    <Typography sx={{ width: "90%", margin: "auto" }} variant='h4'>No user with this name</Typography>}
+                            </div>
+                        </form>
+                    </div>
+                </Dialog>
             </div>
         </div>
     )
