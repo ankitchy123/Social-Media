@@ -7,12 +7,13 @@
     padding: 1vw;
 }
 
-.createGroupDialog{
-    width: 39vw;
+/* .createGroupDialog{
+    width: 38vmax;
     display: flex;
     flex-direction: column;
     align-items: center;
-}
+    overflow-x: hidden;
+} */
 
 .createGroupForm{
     /* border: 2px solid black; */
@@ -33,7 +34,7 @@
     outline: none;
 }
 .searchGroupUser{
-    width: 38vw;
+    width: 35vw;
     /* border: 2px solid black; */
     display: flex;
     flex-direction: column;

@@ -3,20 +3,18 @@ import "./SingleChat.css"
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import SendIcon from '@mui/icons-material/Send';
 import { Avatar, Box, Button, Dialog, FormControl, Input, Typography } from '@mui/material';
-import { accessChat } from '../../Actions/Chat';
-import { fetchMessages } from '../../Actions/Message';
 import { getSender } from '../../config/ChatLogics';
 import Loader from '../Loader/Loader';
 import { IconButton } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import ScrollableChat from '../ScrollableChat/ScrollableChat';
 import { useAlert } from "react-alert"
+import UserListItem from "../UserListItem/UserListItem";
 const ENDPOINT = "https://social-media-app-mgt4.onrender.com";
 var socket, selectedChatCompare;
 
-const SingleChat = ({ selectedChat, fetchAgain, setFetchAgain }) => {
+const SingleChat = ({ selectedChat, setSelectedChat, fetchAgain, setFetchAgain }) => {
     const alert = useAlert()
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState("");
@@ -25,14 +23,19 @@ const SingleChat = ({ selectedChat, fetchAgain, setFetchAgain }) => {
     const [typing, setTyping] = useState(false);
     const [istyping, setIsTyping] = useState(false);
     const [userDetailToggle, setUserDetailToggle] = useState(false)
+    const [groupUsers, setGroupUsers] = useState(selectedChat.users)
 
+    const [groupChatName, setGroupChatName] = useState();
     const { user, loading: userLoading } = useSelector((state) => state.user)
 
+    const { users, loading: allUsersLoading, error } = useSelector((state) => state.allUsers)
+    const { addedUserChat, removedUserChat, message } = useSelector((state) => state.allChats)
+
     const dispatch = useDispatch()
+
     const fetchMessages = async () => {
         if (!selectedChat) return;
         try {
-
             setLoading(true);
             const { data } = await axios.get(`/api/v1/message/${selectedChat._id}`)
             setMessages(data.messages);
@@ -78,6 +81,7 @@ const SingleChat = ({ selectedChat, fetchAgain, setFetchAgain }) => {
     useEffect(() => {
         fetchMessages();
         selectedChatCompare = selectedChat;
+        // dispatch(accessChat)
         // eslint-disable-next-line
     }, [selectedChat]);
     useEffect(() => {
@@ -86,6 +90,18 @@ const SingleChat = ({ selectedChat, fetchAgain, setFetchAgain }) => {
             setFetchAgain(!fetchAgain)
         });
     });
+
+    useEffect(() => {
+        if (error) {
+            alert.error(error);
+            dispatch(clearErrors)
+        }
+        if (message) {
+            alert.success(message)
+            dispatch(clearMessage)
+        }
+    }, [alert, error])
+
 
     const typingHandler = (e) => {
         setNewMessage(e.target.value);
@@ -137,28 +153,37 @@ const SingleChat = ({ selectedChat, fetchAgain, setFetchAgain }) => {
                     ) : (
                         <>
                             {selectedChat.chatName.toUpperCase()}
-                            {/* <IconButton style={{ display: "flex", backgroundColor: "#edf2f7" }}>
+                            <IconButton style={{ display: "flex", backgroundColor: "#edf2f7" }} onClick={() => setUserDetailToggle(!userDetailToggle)}>
                                 <VisibilityIcon />
-                            </IconButton> */}
+                            </IconButton>
+
+                            <Dialog sx={{ zIndex: 1 }} open={userDetailToggle} onClose={() => setUserDetailToggle(!userDetailToggle)}>
+                                <div className="updateGroupDialog" >
+                                    <div style={{ width: "90%", display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+                                        <Typography sx={{ display: "flex", fontSize: "40px", fontFamily: "Work sans" }}>
+                                            {selectedChat.chatName}
+                                        </Typography>
+                                    </div>
+                                    <div className="updateGroupSearchResult">
+                                        {selectedChat.users.map((user) => (
+                                            <UserListItem
+                                                key={user._id}
+                                                user={user}
+                                                admin={selectedChat.groupAdmin._id === user._id ? true : false}
+                                            />
+                                        ))}
+                                    </div>
+                                </div>
+                                {/* {selectedChat.groupAdmin._id === user._id ? <Button sx={{ color: "red", width: "20vw", margin: "auto" }} onClick={() => deleteGroup(user)}>
+                                    Delete Group
+                                </Button> :
+                                    <Button sx={{ color: "red", width: "20vw", margin: "auto" }} onClick={() => leaveGroup(user)}>
+                                        Leave Group
+                                    </Button>} */}
+                            </Dialog>
                         </>
                     ))}
-            </Typography>
-            {/* <Box
-                // p={3}
-                sx={{
-                    border: "2px solid red",
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "flex-end",
-                    // justifyContent: "space-between",
-                    backgroundColor: "#E8E8E8",
-                    width: "100%",
-                    height: "90%",
-                    borderRadius: "5px",
-                    overflowY: "hidden",
-                    margin: "0 3vmax"
-                }}
-            > */}
+            </Typography >
             <Box
                 sx={{
                     display: "flex",
@@ -169,10 +194,8 @@ const SingleChat = ({ selectedChat, fetchAgain, setFetchAgain }) => {
                     height: "90%",
                     overflowY: "hidden"
                 }}
-            // p={3} borderRadius="lg"
             >
                 {loading ? (
-                    // <Spinner size="xl" w={20} h={20} alignSelf="center" margin="auto" />
                     <Loader />
                 ) : (
                     <div className="messages" style={{ overflow: "auto" }}>

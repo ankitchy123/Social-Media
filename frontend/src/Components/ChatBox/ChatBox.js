@@ -1,7 +1,8 @@
+import useMediaQuery from '@mui/material/useMediaQuery';
 import SingleChat from "../SingleChat/SingleChat";
 import { Box } from "@mui/material";
 
-const Chatbox = ({ selectedChat, fetchAgain, setFetchAgain }) => {
+const Chatbox = ({ selectedChat, setSelectedChat, fetchAgain, setFetchAgain }) => {
     return (
         <Box
             sx={{
@@ -11,10 +12,10 @@ const Chatbox = ({ selectedChat, fetchAgain, setFetchAgain }) => {
                 alignItems: "center",
                 width: "69vw",
                 height: "83vh",
-                margin: "auto"
+                margin: "auto",
             }}
         >
-            <SingleChat selectedChat={selectedChat} fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} />
+            <SingleChat selectedChat={selectedChat} setSelectedChat={setSelectedChat} fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} />
         </Box>
     );
 };

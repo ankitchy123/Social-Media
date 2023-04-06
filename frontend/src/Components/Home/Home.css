@@ -18,3 +18,14 @@
     box-sizing: border-box;
     overflow-y: auto;
 }
+
+@media screen and (max-width: 600px) {
+    .home {
+      grid-template-columns: 2fr 1fr;
+    }
+  
+    .homeleft {
+      padding: 0;
+      min-height: 90vh;
+    }
+}

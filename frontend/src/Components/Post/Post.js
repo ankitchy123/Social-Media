@@ -26,7 +26,6 @@ const Post = ({ postId, caption, postImage, likes = [], comments = [], ownerImag
     const handleLike = async () => {
         setLiked(!liked);
         await dispatch(likePost(postId))
-        console.log(account);
         if (account === "home") {
             dispatch(getFollowingPosts())
         }

@@ -35,9 +35,13 @@ export const allChatsReducer = createReducer(initialState, {
     },
     createGroupFailure: (state, action) => {
         state.loading = false;
-        state.error = action.payload;
+        state.message = action.payload;
     },
+
     clearErrors: (state) => {
         state.error = null
+    },
+    clearMessage: (state) => {
+        state.message = null
     }
 })

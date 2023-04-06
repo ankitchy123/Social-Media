@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import AddIcon from '@mui/icons-material/Add';
 import "./MyChats.css"
 import { borderRadius, Box, Stack } from '@mui/system';
-import { createGroup, fetchAllChats } from "../../Actions/Chat"
+import { fetchAllChats } from "../../Actions/Chat"
 import { getSender } from "../../config/ChatLogics"
 import Loader from '../Loader/Loader';
 import { getAllUsers } from '../../Actions/User';
@@ -12,51 +12,16 @@ import UserListItem from '../UserListItem/UserListItem';
 import UserBadgeItem from '../UserBadgeItem/UserBadgeItem';
 import { useAlert } from "react-alert"
 
-const MyChats = ({ setSearchToggle, searchToggle, selectedChat, setSelectedChat, setFetchAgain, fetchAgain }) => {
-    const [createGroupToggle, setCreateGroupToggle] = useState(false)
-    const [groupChatName, setGroupChatName] = useState("")
-    const [selectedUsers, setSelectedUsers] = useState([]);
-    const [search, setSearch] = useState("");
-    const [searchResult, setSearchResult] = useState([]);
-
+const MyChats = ({ setSearchToggle, searchToggle, selectedChat, setSelectedChat, setFetchAgain, fetchAgain, createGroupToggle, setCreateGroupToggle }) => {
     const { allChats, loading } = useSelector((state) => state.allChats)
     const { user, loading: userLoading } = useSelector((state) => state.user)
     const { users, loading: allUsersLoading } = useSelector((state) => state.allUsers)
     const alert = useAlert()
     const dispatch = useDispatch();
 
-    const handleSubmit = () => {
-        if (!groupChatName || !selectedUsers) {
-            alert.info("Please fill all the feilds")
-            return;
-        }
-        let userSet = JSON.stringify(selectedUsers.map((u) => u._id))
-        dispatch(createGroup(groupChatName, userSet))
-        setCreateGroupToggle(!createGroupToggle)
-        setFetchAgain(!fetchAgain)
-    }
-    const handleSearch = (query) => {
-        if (!query) {
-            alert.info("Please enter a name")
-            return;
-        }
-        dispatch(getAllUsers(query))
-    }
-
-    const handleGroup = (userToAdd) => {
-        if (selectedUsers.includes(userToAdd)) {
-            alert.info("User already added")
-            return;
-        }
-        setSelectedUsers([...selectedUsers, userToAdd]);
-    }
-    const handleDelete = (delUser) => {
-        setSelectedUsers(selectedUsers.filter((sel) => sel._id !== delUser._id));
-    };
-
     useEffect(() => {
         dispatch(fetchAllChats())
-    }, [dispatch, fetchAgain, selectedChat])
+    }, [dispatch, selectedChat])
     return (
         loading ? <Loader /> : <div className='container'>
             <div className='newGroupContainer'>
@@ -69,8 +34,9 @@ const MyChats = ({ setSearchToggle, searchToggle, selectedChat, setSelectedChat,
                         allChats.map((chat) => (
                             <Box
                                 onClick={() => setSelectedChat(chat)}
+                                bgcolor={selectedChat === chat ? "#38B2AC" : "#E8E8E8"}
                                 sx={{
-                                    backgroundColor: selectedChat === chat ? "#38B2AC" : "#E8E8E8",
+                                    // backgroundColor: selectedChat === chat ? "#38B2AC" : "#E8E8E8",
                                     color: selectedChat === chat ? "white" : "black",
                                     cursor: "pointer",
                                     margin: "1vmax",
@@ -94,12 +60,13 @@ const MyChats = ({ setSearchToggle, searchToggle, selectedChat, setSelectedChat,
                                 )}
                             </Box>
                         ))
-                        : "Search User to Start Chatting"}
+                        : <div style={{ height: "60vh", display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
+                            <Typography sx={{ margin: "auto" }} variant='h5'>Search User to Start Chatting</Typography>
+                        </div>}
                 </div>
             </Stack >
 
-
-            <Dialog open={createGroupToggle} onClose={() => setCreateGroupToggle(!createGroupToggle)}>
+            {/* <Dialog open={createGroupToggle} onClose={() => setCreateGroupToggle(!createGroupToggle)}>
                 <div className="createGroupDialog">
                     <Typography variant="h3" style={{ padding: "1vmax" }}>
                         Create Group
@@ -139,7 +106,7 @@ const MyChats = ({ setSearchToggle, searchToggle, selectedChat, setSelectedChat,
                         Create Chat
                     </Button>
                 </div>
-            </Dialog >
+            </Dialog > */}
         </div >
     )
 }

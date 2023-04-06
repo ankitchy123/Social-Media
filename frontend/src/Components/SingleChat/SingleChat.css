@@ -4,3 +4,63 @@
     overflow-y: scroll;
     scrollbar-width: none;
 }
+
+.updateGroupDialog{
+    /* border: 2px solid black; */
+    background-color: white;
+    height: 80vh;
+    width: 100%;
+    border-radius: 50px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.updateGroupForm {
+    background-color: white;
+    width: 100%;
+    border-radius: 30px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.updateGroupForm > input{
+    box-sizing: border-box;
+    padding: 1vmax 2vmax;
+    width: 90%;
+    border-radius: 40px;
+    border: 1px solid #ccc;
+    margin: 1vmax;
+    font: 100 1.2rem "Roboto", sans-serif;
+    outline: none;
+}
+
+.updateGroupSearchResult {
+    width: 100%;
+    overflow-x: hidden;
+    padding: 2vmax;
+    box-sizing: border-box;
+}
+
+
+@media screen and (max-width: 600px) {
+    .updateGroupDialog{
+        width: fit-content;
+    }
+    .updateGroupForm {
+      width: 100%;
+    }
+  
+    .updateGroupForm > input {
+      padding: 4vw 8vw;
+      margin: 2vmax;
+      font: 100 1.2rem "Roboto", sans-serif;
+      margin: 4vw;
+    }
+    .updateGroupSearchResult{
+        width: 90%;
+    }
+}

@@ -6,7 +6,6 @@ export const fetchMessages = (chatId) => async (dispatch) => {
             type: "fetchMessageRequest"
         });
         const { data } = await axios.get(`/api/v1/message/${chatId}`)
-        // console.log(data);
         dispatch({
             type: "fetchMessageSuccess",
             payload: data.messages

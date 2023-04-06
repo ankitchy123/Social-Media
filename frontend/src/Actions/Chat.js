@@ -20,6 +20,7 @@ export const fetchAllChats = () => async (dispatch) => {
 
 export const accessChat = (userId) => async (dispatch) => {
     try {
+        // console.log("OK");
         dispatch({
             type: "accessChatRequest"
         });
@@ -61,6 +62,52 @@ export const createGroup = (name, users) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: "createGroupFailure",
+            payload: error.response.data.message
+        })
+    }
+}
+export const addToGroup = (chatId, userId) => async (dispatch) => {
+    try {
+        dispatch({
+            type: "addToGroupRequest"
+        });
+        const { data } = await axios.put(`/api/v1/chat/groupadd`, {
+            chatId, userId
+        }, {
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+        dispatch({
+            type: "addToGroupSuccess",
+            payload: data.added
+        })
+    } catch (error) {
+        dispatch({
+            type: "addToGroupFailure",
+            payload: error.response.data.message
+        })
+    }
+}
+export const removeFromGroup = (chatId, userId) => async (dispatch) => {
+    try {
+        dispatch({
+            type: "removeFromGroupRequest"
+        });
+        const { data } = await axios.put(`/api/v1/chat/groupremove`, {
+            chatId, userId
+        }, {
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+        dispatch({
+            type: "removeFromGroupSuccess",
+            payload: data.removed
+        })
+    } catch (error) {
+        dispatch({
+            type: "removeFromGroupFailure",
             payload: error.response.data.message
         })
     }
