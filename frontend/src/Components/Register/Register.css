@@ -53,6 +53,9 @@
 }
 
 @media screen and (max-width: 600px) {
+    .registerForm > input[type='file'] {
+      color: rgba(0, 0, 0, 0)
+    }
     .registerForm {
       width: 100%;
     }
@@ -64,13 +67,13 @@
       margin: 4vw;
     }
   
-    .registerForm > input[type="file"] {
+    /* .registerForm > input[type="file"] {
       width: 100%;
     }
   
     .registerForm > input[type="file"]::-webkit-file-upload-button {
       width: 70%;
-    }
+    } */
   
     .registerForm > a {
       align-self: center;

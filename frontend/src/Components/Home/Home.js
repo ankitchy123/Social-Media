@@ -42,7 +42,7 @@ const Home = () => {
                     {posts && posts.length > 0 ? posts.map((post) => (
                         <Post
                             key={post._id}
-                            postImage={"https://www.denofgeek.com/wp-content/uploads/2022/02/iron-man-doctor-strange-avengers-infinity-war.jpg?fit=1280%2C720"}
+                            postImage={post.image.url}
                             caption={post.caption}
                             account={"home"}
                             postId={post._id}

@@ -18,16 +18,21 @@ const MyChats = ({ setSearchToggle, searchToggle, selectedChat, setSelectedChat,
     const { users, loading: allUsersLoading } = useSelector((state) => state.allUsers)
     const alert = useAlert()
     const dispatch = useDispatch();
-
     useEffect(() => {
         dispatch(fetchAllChats())
-    }, [dispatch, selectedChat])
+    }, [dispatch, selectedChat, fetchAgain])
     return (
-        loading ? <Loader /> : <div className='container'>
-            <div className='newGroupContainer'>
+        loading ? <Loader /> : <Box className='container'>
+            <Box sx={{
+                '@media (max-width: 400px)': {
+                    // border: "2px solid black",
+                    width: "95%",
+                    // alignItems: "unset"
+                }
+            }} className='newGroupContainer'>
                 <Button onClick={() => setCreateGroupToggle(!createGroupToggle)}>New Group Chat<AddIcon /></Button>
                 <Button onClick={() => setSearchToggle(!searchToggle)}>New Chat<AddIcon /></Button>
-            </div>
+            </Box>
             <Stack>
                 <div className='chatContainer'>
                     {allChats && allChats.length > 0 ?
@@ -107,7 +112,7 @@ const MyChats = ({ setSearchToggle, searchToggle, selectedChat, setSelectedChat,
                     </Button>
                 </div>
             </Dialog > */}
-        </div >
+        </Box >
     )
 }
 

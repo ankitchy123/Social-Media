@@ -94,3 +94,32 @@
         width: 90%;
     }
 }
+
+@media screen and (max-width: 460px) {
+    .newChatDialog{
+        width: 100%;
+    }
+    /* .newChatsearchForm {
+      width: 100%;
+    }
+  
+    .newChatsearchForm > input {
+      padding: 4vw 8vw;
+      margin: 2vmax;
+      font: 100 1.2rem "Roboto", sans-serif;
+      margin: 4vw;
+    }
+    .searchResults{
+        width: 90%;
+    } */
+}
+
+
+/* @media screen and (max-width: 400px) {
+    .chatleft{
+        display: none;
+    }
+    .chatright{
+        width: 90%;
+    }
+} */

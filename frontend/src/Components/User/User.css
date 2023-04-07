@@ -4,6 +4,10 @@
     text-decoration: none;
     color: rgba(0, 0, 0, 0.500);
     transition: all 0.5s;
+    border-radius: 10px;
+}
+.homeUser:hover{
+    background-color: #38B2AC;
 }
 
 .homeUser > img{

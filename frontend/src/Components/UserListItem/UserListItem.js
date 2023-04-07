@@ -30,13 +30,19 @@ const UserListItem = ({ user, handleFunction, admin = false }) => {
                 },
                 '@media(max-width: 900px)': {
                     width: '90%'
+                },
+                '@media(max-width: 500px)': {
+                    width: '85%'
                 }
             }}
             onClick={handleFunction}
             px={3} py={2} mb={2}
         >
             <Avatar sx={{ width: "4vmax", height: "4vmax", marginRight: 2, cursor: "pointer" }} name={user.name} src={user.avatar.url} />
-            <Box sx={{ width: "35vmax", wordWrap: "break-word" }}>
+            <Box sx={{
+                width: "90%",
+                wordWrap: "break-word",
+            }}>
                 <Typography>{user.name} {admin ? <em style={{ color: "red" }}>Admin</em> : ""}</Typography>
                 <Typography fontSize="xs">
                     <b>Email : </b>

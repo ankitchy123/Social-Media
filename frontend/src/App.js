@@ -17,6 +17,7 @@ import UserProfile from './Components/UserProfile/UserProfile';
 import Search from './Components/Search/Search';
 import NotFound from './Components/NotFound/NotFound';
 import ChatPage from './Components/ChatPage/ChatPage';
+import Account1 from './Components/Account/Account1';
 
 function App() {
   const dispatch = useDispatch();
@@ -32,7 +33,8 @@ function App() {
       <Routes>
         <Route path='/' element={isAuthenticated ? <Home /> : <Login />} />
         <Route path='/register' element={isAuthenticated ? <Account /> : <Register />} />
-        <Route path='/account' element={isAuthenticated ? <Account /> : <Login />} />
+        {/* <Route path='/account' element={isAuthenticated ? <Account /> : <Login />} /> */}
+        <Route path='/account' element={isAuthenticated ? <Account1 /> : <Login />} />
         <Route path='/newpost' element={isAuthenticated ? <NewPost /> : <Login />} />
         <Route path='/update/profile' element={isAuthenticated ? <UpdateProfile /> : <Login />} />
         <Route path='/update/password' element={isAuthenticated ? <UpdatePassword /> : <Login />} />

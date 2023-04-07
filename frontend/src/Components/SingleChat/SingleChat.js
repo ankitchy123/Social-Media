@@ -11,6 +11,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import ScrollableChat from '../ScrollableChat/ScrollableChat';
 import { useAlert } from "react-alert"
 import UserListItem from "../UserListItem/UserListItem";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 const ENDPOINT = "https://social-media-app-mgt4.onrender.com";
 var socket, selectedChatCompare;
 
@@ -129,6 +130,7 @@ const SingleChat = ({ selectedChat, setSelectedChat, fetchAgain, setFetchAgain }
             <Typography
                 sx={{ fontSize: "30px", width: "100%", fontFamily: "Work sans", display: "flex", justifyContent: "space-between", alignItems: "center" }}
             >
+                <ArrowBackIcon sx={{ '@media (min-width: 400px)': { display: "none" } }} onClick={() => setSelectedChat("")} />
                 {messages &&
                     (!selectedChat.isGroupChat ? (
                         <>
@@ -138,16 +140,25 @@ const SingleChat = ({ selectedChat, setSelectedChat, fetchAgain, setFetchAgain }
                             </IconButton>
 
                             <Dialog open={userDetailToggle} onClose={() => setUserDetailToggle(!userDetailToggle)}>
-                                <div style={{ width: "38vw", display: "flex", flexDirection: "column", alignItems: "center" }}>
-                                    <Typography sx={{ fontSize: "40px", fontFamily: "Work sans", fontWeight: "600" }}>{selectedChat.users[1].name}</Typography>
-
-                                    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "space-between" }} >
+                                <Box sx={{ border: "2px solid red", margin: "1vmax", width: "35vmax", display: "flex", flexDirection: "column", alignItems: "center" }}>
+                                    <Typography fontSize="35px" sx={{ fontFamily: "Work sans", fontWeight: "600" }}>{selectedChat.users[1].name}</Typography>
+                                    <Box style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "space-between" }} >
                                         <Avatar sx={{ width: "10vmax", height: "10vmax" }} src={selectedChat.users[1].avatar.url} alt={selectedChat.users[1].name} />
-                                        <Typography fontSize={{ base: "28px", md: "30px" }} fontFamily="Work sans">
+                                        <Typography fontFamily="Work sans" sx={{
+                                            border: "2px solid black",
+                                            width: "35vmax",
+                                            wordWrap: "break-word",
+                                            textAlign: "center",
+                                            fontSize: "30px",
+                                            margin: "auto",
+                                            '@media (max-width: 700px)': {
+                                                fontSize: "28px",
+                                            }
+                                        }}>
                                             Email: {selectedChat.users[1].email}
                                         </Typography>
-                                    </div>
-                                </div>
+                                    </Box>
+                                </Box>
                             </Dialog>
                         </>
                     ) : (
@@ -158,13 +169,17 @@ const SingleChat = ({ selectedChat, setSelectedChat, fetchAgain, setFetchAgain }
                             </IconButton>
 
                             <Dialog sx={{ zIndex: 1 }} open={userDetailToggle} onClose={() => setUserDetailToggle(!userDetailToggle)}>
-                                <div className="updateGroupDialog" >
-                                    <div style={{ width: "90%", display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+                                <Box sx={{
+                                    '@media(max-width: 430px)': {
+                                        width: '100%'
+                                    }
+                                }} className="updateGroupDialog" >
+                                    <Box style={{ width: "90%", display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
                                         <Typography sx={{ display: "flex", fontSize: "40px", fontFamily: "Work sans" }}>
                                             {selectedChat.chatName}
                                         </Typography>
-                                    </div>
-                                    <div className="updateGroupSearchResult">
+                                    </Box>
+                                    <Box className="updateGroupSearchResult">
                                         {selectedChat.users.map((user) => (
                                             <UserListItem
                                                 key={user._id}
@@ -172,8 +187,8 @@ const SingleChat = ({ selectedChat, setSelectedChat, fetchAgain, setFetchAgain }
                                                 admin={selectedChat.groupAdmin._id === user._id ? true : false}
                                             />
                                         ))}
-                                    </div>
-                                </div>
+                                    </Box>
+                                </Box>
                                 {/* {selectedChat.groupAdmin._id === user._id ? <Button sx={{ color: "red", width: "20vw", margin: "auto" }} onClick={() => deleteGroup(user)}>
                                     Delete Group
                                 </Button> :

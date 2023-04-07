@@ -13,6 +13,9 @@ const Chatbox = ({ selectedChat, setSelectedChat, fetchAgain, setFetchAgain }) =
                 width: "69vw",
                 height: "83vh",
                 margin: "auto",
+                '@media (max-width: 400px)': {
+                    width: "90vw",
+                }
             }}
         >
             <SingleChat selectedChat={selectedChat} setSelectedChat={setSelectedChat} fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} />

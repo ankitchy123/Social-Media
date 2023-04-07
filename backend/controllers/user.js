@@ -2,7 +2,9 @@ const User = require("../models/User");
 const Post = require("../models/Post");
 const { sendEmail } = require("../middleware/sendEmail");
 const crypto = require("crypto");
-const cloudinary = require("cloudinary")
+const cloudinary = require("cloudinary");
+const Chat = require("../models/Chat");
+const Message = require("../models/Message");
 
 exports.register = async (req, res) => {
     try {
@@ -58,7 +60,6 @@ exports.logout = async (req, res) => {
 
 exports.followUser = async (req, res) => {
     try {
-        console.log(req.user);
         const userToFollow = await User.findById(req.params.id);
         const loggedInUser = await User.findById(req.user._id);
 
@@ -186,6 +187,32 @@ exports.deleteMyProfile = async (req, res) => {
             }
         });
 
+        // Delete Chat
+        const chats = await Chat.find()
+        chats.forEach(async (chat) => {
+            if (chat.isGroupChat) {
+                if (chat.groupAdmin.toString() == user._id.toString()) {
+                    const messages = await Message.findOneAndDelete({ chat: chat._id })
+                    await chat.delete()
+                }
+                else {
+                    const index = chat.users.indexOf(user._id);
+                    if (index > -1) {
+                        chat.users.splice(index, 1);
+                        await chat.save();
+                    }
+                }
+            }
+            else {
+                const index = chat.users.indexOf(user._id);
+                if (index > -1) {
+                    const messages = await Message.findOneAndDelete({ chat: chat._id })
+                    await chat.delete()
+                }
+            }
+        })
+        // Delete Messages
+        const messages = await Message.deleteMany({ sender: user._id })
         await user.remove();
 
         res.status(200).cookie("token", null, { expires: new Date(Date.now()), httpOnly: true }).json({ success: true, message: "Profile Deleted" });

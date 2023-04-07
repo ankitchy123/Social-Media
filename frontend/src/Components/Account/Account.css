@@ -33,6 +33,7 @@
 }
 
 .accountright > h5 {
+    text-align: center;
     margin: 2vmax;
 }
 
@@ -69,7 +70,7 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.253);
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 900px) {
     .account {
       grid-template-columns: 2fr 1fr;
     }
@@ -83,4 +84,19 @@
       font: 100 1rem "Roboto";
       margin-top: 6vw;
     }
+}
+@media screen and (max-width: 500px) {
+    .account {
+      grid-template-columns: 2fr 20vw;
+    }
+  
+    /* .accountleft {
+      padding: 0;
+      min-height: 90vh;
+    }
+  
+    .accountright > a {
+      font: 100 1rem "Roboto";
+      margin-top: 6vw;
+    } */
 }

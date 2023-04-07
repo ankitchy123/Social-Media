@@ -88,97 +88,103 @@ const ChatPage = () => {
             setSelectedChat(group)
         }
     }, [singleChat, group])
-    // useEffect(() => {
-    //     if (message) {
-    //         alert.info("Please fill all the feilds")
-    //     }
-    // }, [message, alert])
-
 
     return (
-        <div className='chat'>
-            <div className="chatleft" style={{ padding: "0", overflowX: "hidden" }}>
-                <MyChats setSearchToggle={setSearchToggle} searchToggle={searchToggle} selectedChat={selectedChat} setSelectedChat={setSelectedChat} setFetchAgain={setFetchAgain} fetchAgain={fetchAgain} createGroupToggle={createGroupToggle} setCreateGroupToggle={setCreateGroupToggle} />
-            </div>
-            <div className="chatright">
-                {selectedChat ? <Chatbox selectedChat={selectedChat} setSelectedChat={setSelectedChat} fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} /> : <div className='nochat'>
-                    <SendIcon style={{ fontSize: "7vmax", transform: "rotate(-24deg)" }} />
-                    <Typography style={{ margin: "1vmax" }}>Your Messages</Typography>
-                    <Button onClick={() => setSearchToggle(!searchToggle)}>Send Message</Button>
-
-                </div>}
-                <Dialog sx={{ zIndex: 1000 }} open={searchToggle} onClose={() => setSearchToggle(!searchToggle)}>
-                    <div className="newChatDialog">
-                        <form className="newChatsearchForm" onSubmit={submitHandler}>
-                            <Typography variant="h3" style={{ padding: "2vmax" }}>
-                                Search User
-                            </Typography>
-                            <input
-                                type="text"
-                                placeholder="Name..."
-                                value={name}
-                                required
-                                onChange={(e) => setName(e.target.value)}
+        <>
+            <Box className='chat'>
+                <Box sx={{
+                    '@media (max-width: 400px)': {
+                        // border: "2px solid black",
+                        display: selectedChat ? "none" : "flex",
+                        width: "95%",
+                        alignItems: "unset"
+                    }
+                }} className="chatleft" style={{ padding: "0", overflowX: "hidden" }}>
+                    <MyChats setSearchToggle={setSearchToggle} searchToggle={searchToggle} selectedChat={selectedChat} setSelectedChat={setSelectedChat} setFetchAgain={setFetchAgain} fetchAgain={fetchAgain} createGroupToggle={createGroupToggle} setCreateGroupToggle={setCreateGroupToggle} />
+                </Box>
+                <Box sx={{
+                    '@media (max-width: 400px)': {
+                        display: selectedChat ? "flex" : "none",
+                        width: "95%"
+                    }
+                }} className="chatright">
+                    {selectedChat ? <Chatbox selectedChat={selectedChat} setSelectedChat={setSelectedChat} fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} /> : <div className='nochat'>
+                        <SendIcon style={{ fontSize: "7vmax", transform: "rotate(-24deg)" }} />
+                        <Typography style={{ margin: "1vmax" }}>Your Messages</Typography>
+                        <Button onClick={() => setSearchToggle(!searchToggle)}>Send Message</Button>
+                    </div>}
+                </Box>
+            </Box>
+            <Dialog sx={{ zIndex: 1 }} open={createGroupToggle} onClose={() => setCreateGroupToggle(!createGroupToggle)}>
+                <div className="newChatDialog">
+                    <Typography variant="h3" style={{ padding: "1vmax" }}>Create Group</Typography>
+                    <form className="newChatsearchForm">
+                        <input
+                            type="text"
+                            placeholder="Group Name..."
+                            onChange={(e) => setGroupChatName(e.target.value)}
+                        />
+                        <input
+                            type="text"
+                            placeholder="Add Users"
+                            onChange={(e) => handleSearch(e.target.value)}
+                        />
+                    </form>
+                    <Box sx={{ width: "90%" }} w="100%" d="flex" flexWrap="wrap" >
+                        {selectedUsers.map((u) => (
+                            <UserBadgeItem
+                                key={u._id}
+                                user={u}
+                                handleFunction={() => handleDelete(u)}
                             />
-
-                            <Button disabled={loading} type="submit">Search</Button>
-
-                            <div className="searchResults">
-                                {users && users.length > 0 ?
-                                    users.map((user) => (
-                                        <UserListItem
-                                            key={user._id}
-                                            user={user}
-                                            handleFunction={() => newChat(user._id)}
-                                        />
-                                    )) :
-                                    <Typography sx={{ width: "90%", margin: "auto" }} variant='h4'>No user with this name</Typography>}
-                            </div>
-                        </form>
-                    </div>
-                </Dialog>
-
-                <Dialog sx={{ zIndex: 1 }} open={createGroupToggle} onClose={() => setCreateGroupToggle(!createGroupToggle)}>
-                    <div className="newChatDialog">
-                        <Typography variant="h3" style={{ padding: "1vmax" }}>Create Group</Typography>
-                        <form className="newChatsearchForm">
-                            <input
-                                type="text"
-                                placeholder="Group Name..."
-                                onChange={(e) => setGroupChatName(e.target.value)}
-                            />
-                            <input
-                                type="text"
-                                placeholder="Add Users eg: John, Piyush, Jane"
-                                onChange={(e) => handleSearch(e.target.value)}
-                            />
-                        </form>
-                        <Box sx={{ width: "90%" }} w="100%" d="flex" flexWrap="wrap" >
-                            {selectedUsers.map((u) => (
-                                <UserBadgeItem
-                                    key={u._id}
-                                    user={u}
-                                    handleFunction={() => handleDelete(u)}
+                        ))}
+                    </Box>
+                    <div className="searchResults">
+                        {users &&
+                            users?.slice(0, 4).map((res) => (
+                                <UserListItem
+                                    key={res._id}
+                                    user={res}
+                                    handleFunction={() => handleGroup(res)}
                                 />
                             ))}
-                        </Box>
-                        <div className="searchResults">
-                            {users &&
-                                users?.slice(0, 4).map((res) => (
-                                    <UserListItem
-                                        key={res._id}
-                                        user={res}
-                                        handleFunction={() => handleGroup(res)}
-                                    />
-                                ))}
-                        </div>
-                        <Button style={{ marginBottom: "10px" }} onClick={handleSubmit}>
-                            Create Chat
-                        </Button>
                     </div>
-                </Dialog >
-            </div>
-        </div>
+                    <Button style={{ marginBottom: "10px" }} onClick={handleSubmit}>
+                        Create Chat
+                    </Button>
+                </div>
+            </Dialog >
+            <Dialog sx={{ zIndex: 1000 }} open={searchToggle} onClose={() => setSearchToggle(!searchToggle)}>
+                <div className="newChatDialog">
+                    <form className="newChatsearchForm" onSubmit={submitHandler}>
+                        <Typography variant="h3" style={{ padding: "2vmax" }}>
+                            Search User
+                        </Typography>
+                        <input
+                            type="text"
+                            placeholder="Name..."
+                            value={name}
+                            required
+                            onChange={(e) => setName(e.target.value)}
+                        />
+
+                        <Button disabled={loading} type="submit">Search</Button>
+
+                        <div className="searchResults">
+                            {users && users.length > 0 ?
+                                users.map((user) => (
+                                    <UserListItem
+                                        key={user._id}
+                                        user={user}
+                                        handleFunction={() => newChat(user._id)}
+                                    />
+                                )) :
+                                <Typography sx={{ width: "90%", margin: "auto" }} variant='h4'>No user with this name</Typography>}
+                        </div>
+                    </form>
+                </div>
+            </Dialog>
+        </>
     )
 }
 
