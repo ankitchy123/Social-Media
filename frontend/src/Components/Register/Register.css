@@ -1,6 +1,7 @@
 .register {
     min-height: 100vh;
-    background-image: linear-gradient(to right, #fff5bc, #cec1ff);
+    /* background-image: linear-gradient(to right, #fff5bc, #cec1ff); */
+    background-image: linear-gradient(to right, #E8CBC0, #a6b5fb);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -67,10 +68,10 @@
       margin: 4vw;
     }
   
-    /* .registerForm > input[type="file"] {
+    .registerForm > input[type="file"] {
       width: 100%;
     }
-  
+  /* 
     .registerForm > input[type="file"]::-webkit-file-upload-button {
       width: 70%;
     } */

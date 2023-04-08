@@ -1,5 +1,6 @@
 .chat {
-    background-image: linear-gradient(to right, #fff5bc, #cec1ff);
+    /* background-image: linear-gradient(to right, #fff5bc, #cec1ff); */
+    background-image: linear-gradient(to right, #E8CBC0, #a6b5fb);
     box-sizing: border-box;
     display: flex;
     justify-content: space-around;

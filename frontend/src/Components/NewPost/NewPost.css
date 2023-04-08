@@ -1,6 +1,7 @@
 .newPost {
     min-height: 100vh;
-    background-image: linear-gradient(to right, #fff5bc, #cec1ff);
+    /* background-image: linear-gradient(to right, #fff5bc, #cec1ff); */
+    background-image: linear-gradient(to right, #E8CBC0, #a6b5fb);
     display: flex;
     align-items: center;
     justify-content: center;

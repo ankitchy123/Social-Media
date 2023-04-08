@@ -3,7 +3,8 @@
     height: 100vh;
     /* height: fit-content; */
     padding: 2vmax;
-    background-image: linear-gradient(to right, #fff5bc, #cec1ff);
+    /* background-image: linear-gradient(to right, #fff5bc, #cec1ff); */
+    background-image: linear-gradient(to right, #E8CBC0, #a6b5fb);
     padding-bottom: 1vmax;
 }
 

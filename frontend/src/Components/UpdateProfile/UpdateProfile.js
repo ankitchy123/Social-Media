@@ -57,7 +57,7 @@ const UpdateProfile = () => {
     return (
         loading ? <Loader /> : (<div className='updateProfile'>
             <form className="updateProfileForm" onSubmit={submitHandler}>
-                <Typography variant="h3" style={{ padding: "2vmax" }}>
+                <Typography variant="h3" style={{ padding: "2vmax", textAlign: "center", fontFamily: "cursive" }}>
                     Social Media
                 </Typography>
 
