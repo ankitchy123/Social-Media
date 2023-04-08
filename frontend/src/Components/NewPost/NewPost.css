@@ -67,9 +67,9 @@
       font: 100 1.2rem "Roboto", sans-serif;
       margin: 4vw;
     }
-    /* .newPostForm > input[type="file"] {
+    .newPostForm > input[type="file"] {
       width: 100%;
-    } */
+    }
   
     /* .newPostForm > input[type="file"]::-webkit-file-upload-button {
       width: 70%;

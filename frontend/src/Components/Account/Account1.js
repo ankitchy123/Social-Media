@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { deleteMyProfile, getMyPosts, loadUser, logoutUser } from '../../Actions/User'
 import CameraAltOutlinedIcon from '@mui/icons-material/CameraAltOutlined';
-import LogoutIcon from '@mui/icons-material/Logout';
 import Loader from '../Loader/Loader'
 import Post from '../Post/Post'
 import User from '../User/User'
@@ -62,7 +61,7 @@ const Account1 = () => {
                         <Avatar sx={{ width: "10vmax", height: "10vmax" }} src={user.avatar.url} />
                         <div className='block1'>
                             <div className='editProfile'>
-                                <Typography variant='h5'>{user.name}</Typography>
+                                <Typography sx={{ fontSize: "2vmax", textAlign: "center" }} variant='h5'>{user.name}</Typography>
                                 <Link to="/update/profile">Edit Profile</Link>
                                 {/* <LogoutIcon sx={{}} onClick={logoutHandler} /> */}
                                 <Button variant='contained' onClick={logoutHandler}>Logout</Button>
@@ -92,7 +91,7 @@ const Account1 = () => {
                     </div>
                     <div className='followContainer'>
                         <div>
-                            <Typography sx={{ marginRight: "1vmax" }}>{user.posts.length}</Typography>
+                            <Typography sx={{ marginRight: "2vmax" }}>{user.posts.length}</Typography>
                             <Typography>Posts</Typography>
                         </div>
                         <div>
@@ -123,7 +122,7 @@ const Account1 = () => {
                                 ownerId={post.owner._id}
                                 isDelete={true}
                             />
-                        )) : <Box sx={{ width: "fit-content", margin: "auto", textAlign: "center" }}>
+                        )) : <Box className="noposts" sx={{ width: "fit-content", margin: "auto", textAlign: "center", padding: "5vmax 0" }}>
                             <CameraAltOutlinedIcon sx={{ width: "7vmax", height: "7vmax" }} />
                             <Typography variant='h3'>Share Photos</Typography>
                             <Typography variant='h6'>When you share photos, they will appear on your profile.</Typography>

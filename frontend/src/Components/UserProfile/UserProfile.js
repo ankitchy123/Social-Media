@@ -105,7 +105,6 @@ const UserProfile = () => {
                             src={user.avatar.url}
                             sx={{ height: "8vmax", width: "8vmax" }}
                         />
-
                         <Typography variant="h5">{user.name}</Typography>
 
                         <div>

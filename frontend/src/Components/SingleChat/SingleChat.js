@@ -140,12 +140,11 @@ const SingleChat = ({ selectedChat, setSelectedChat, fetchAgain, setFetchAgain }
                             </IconButton>
 
                             <Dialog open={userDetailToggle} onClose={() => setUserDetailToggle(!userDetailToggle)}>
-                                <Box sx={{ border: "2px solid red", margin: "1vmax", width: "35vmax", display: "flex", flexDirection: "column", alignItems: "center" }}>
+                                <Box sx={{ margin: "1vmax", width: "35vmax", display: "flex", flexDirection: "column", alignItems: "center" }}>
                                     <Typography fontSize="35px" sx={{ fontFamily: "Work sans", fontWeight: "600" }}>{selectedChat.users[1].name}</Typography>
                                     <Box style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "space-between" }} >
                                         <Avatar sx={{ width: "10vmax", height: "10vmax" }} src={selectedChat.users[1].avatar.url} alt={selectedChat.users[1].name} />
                                         <Typography fontFamily="Work sans" sx={{
-                                            border: "2px solid black",
                                             width: "35vmax",
                                             wordWrap: "break-word",
                                             textAlign: "center",
