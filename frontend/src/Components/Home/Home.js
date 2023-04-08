@@ -1,4 +1,4 @@
-import { Typography } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getAllUsers, getFollowingPosts } from '../../Actions/User'
@@ -6,6 +6,7 @@ import Loader from '../Loader/Loader'
 import Post from '../Post/Post'
 import User from '../User/User'
 import { useAlert } from "react-alert"
+import CameraAltOutlinedIcon from '@mui/icons-material/CameraAltOutlined';
 import "./Home.css"
 
 const Home = () => {
@@ -52,7 +53,11 @@ const Home = () => {
                             ownerImage={post.owner.avatar.url}
                             ownerId={post.owner._id}
                         />
-                    )) : <Typography variant='h6'>No posts yet</Typography>}
+                    )) : <Box className="noposts" sx={{ width: "fit-content", margin: "auto", textAlign: "center", padding: "5vmax 0" }}>
+                        <CameraAltOutlinedIcon sx={{ width: "7vmax", height: "7vmax" }} />
+                        <Typography variant='h3'>No Posts Yet</Typography>
+                        <Typography variant='h6'>Follow Users</Typography>
+                    </Box>}
                 </div>
                 <div className="homeright">
                     {users && users.length > 0 ? users.map((user) => (
