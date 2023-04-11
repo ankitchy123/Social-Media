@@ -1,18 +1,13 @@
 
 .account1{
     min-height: 90vh;
-    /* height: 100vh; */
-    /* height: fit-content; */
     padding: 2vmax;
-    /* background-image: linear-gradient(to right, #fff5bc, #cec1ff); */
     background-image: linear-gradient(to right, #E8CBC0, #a6b5fb);
     padding-bottom: 1vmax;
 }
 
-/* height of container */
 .accountContainer{
     width: 90vw;
-    /* height: 100vh; */
     background-color: white;
     margin: auto;
     border-radius: 10px;
@@ -34,7 +29,6 @@
 }
 .block1{
     margin-left: 2vmax;
-    /* border: 2px solid black; */
     height: 8vmax;
     display: flex;
     flex-direction: column;
@@ -45,7 +39,6 @@
     /* width: 30vmax; */
     margin-top: 1vmax;
     /* height: 5vmax; */
-    /* border: 2px solid black; */
     display: flex;
     align-items: center;
     justify-content: space-between;
