@@ -1,6 +1,7 @@
 
 .account1{
-    height: 100vh;
+    min-height: 90vh;
+    /* height: 100vh; */
     /* height: fit-content; */
     padding: 2vmax;
     /* background-image: linear-gradient(to right, #fff5bc, #cec1ff); */

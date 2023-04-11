@@ -46,6 +46,7 @@ const UserProfile1 = () => {
             setMyProfile(true);
         }
         if (user) {
+            console.log(user.followers);
             user.followers.forEach((item) => {
                 if (item._id === me._id) {
                     setFollowing(true);
