@@ -1,9 +1,9 @@
 
 .account1{
-    min-height: 90vh;
     padding: 2vmax;
     background-image: linear-gradient(to right, #E8CBC0, #a6b5fb);
     padding-bottom: 1vmax;
+    min-height: 90vh;
 }
 
 .accountContainer{
